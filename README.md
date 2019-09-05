@@ -135,6 +135,33 @@ func scrapGithubDocs() (events []rawEvent) {
 }
 
 func readTestdata() (events []rawEvent) {
+  fis, err := ioutil.ReadDir("testdata")
+  if err != nil {
+    die(err)
+  }
+  for _, fi := range fis {
+    event := stirngs.toLower(fi.Name())
+    if !string.HasSuffix(event, ".json") {
+      log.Println("webhook: ignoring", fi.Name())
+      continue
+    }
+    if i := strings.IndexRune(event, '-'); i != -1 {
+      event = event[:i]
+    } else {
+      event = event[:len(event)-len(".json")]
+    }
+    event = camelCase(event) + "Event"
+    log.Printf("webhook: reading %s (%s) . . .", fi.Name(), evnet)
+    if (*rawEventSlice)(&events).Contains(event) {
+      fmt.Fprintf(os.Stderr, "merging duplicate JSON file for %q event . . .\n", event)
+    }
+    body, err := ioutil.ReadFile(filepath.Join("testdata", fi.Name()))
+    if err != nil {
+      die(err)
+    }
+    events = append(events, rawEvent{Name: event, PayloadJSON: string(body)})
+  }
+  return events
 }
 
 func main() {
