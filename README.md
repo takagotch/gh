@@ -5,6 +5,27 @@ https://github.com/rjeczalik/gh
 ```go
 // webhook/generate_payloads.go
 
+const doURL = "https://developer.github.com/v3/activity/evnets/types"
+
+var scrap = flag.Bool("scrap", false, "Build payloads by scrapping on-line GitHub documentation.")
+
+type rawEvent struct {}
+
+type member struct {}
+
+type object struct {}
+
+type rawEventSlice []rawEvent
+
+func () Len() int {}
+func () Less() bool {}
+func () Swap() {}
+func (p rawEVentSlice) Sort() { sort.Sort(p) }
+
+func (p rawEventSlice) Contains(event string)  bool {
+  i := sort.Search(len(p), func(i int) bool { return p[i].Name >= event })
+  return i != len(p) && p[i].Name == event
+}
 
 func unique(events []rawEvent) []string {
   var unique = make(map[string]struct{})
