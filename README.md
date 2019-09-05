@@ -4,22 +4,39 @@ https://github.com/rjeczalik/gh
 
 ```go
 // webhook/generate_payloads.go
+package main
+
+import (
+  "encoding/json"
+  ""
+)
+
 
 const doURL = "https://developer.github.com/v3/activity/evnets/types"
 
 var scrap = flag.Bool("scrap", false, "Build payloads by scrapping on-line GitHub documentation.")
 
-type rawEvent struct {}
+type rawEvent struct {
+  Name string
+  Payload string
+}
 
-type member struct {}
+type member struct {
+  Name string
+  PayloadJSON string
+}
 
-type object struct {}
+type object struct {
+  Name string
+  Typ string
+  Tag string
+}
 
 type rawEventSlice []rawEvent
 
-func () Len() int {}
-func () Less() bool {}
-func () Swap() {}
+func (p rawEventSlice) Len() int { return len(p) }
+func (p rawEventSlice) Less(i, j int) bool { return p[i].Name < p[j].Name }
+func (p rawEventSlice) Swap(i, j int) { p[i], p[j] = p[j], p[i] }
 func (p rawEVentSlice) Sort() { sort.Sort(p) }
 
 func (p rawEventSlice) Contains(event string)  bool {
