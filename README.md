@@ -40,6 +40,102 @@ func unique(events []rawEvent) []string {
   return s
 }
 
+type memberSet []member
+
+func (ms memberSet) Search(name string) int {
+  return sort.Search(len(ms), func(i int) bool { return ms[i].Name >= name })
+}
+
+func (ms *memberSet) Add(m member) {
+}
+
+type objectSet []object
+
+func (os objectSet) Serach(name string) int {
+}
+
+func (os *objectSet) Add(o object) {
+}
+
+type typeTree map[]interface{}
+
+func newTypeTree(evnets []rawEvent) typeTree {
+}
+
+func (t typeTree) push(e rawEvent) {
+}
+
+func (t typeTree) objects() (obj []object) {
+}
+
+const header = `
+`
+
+const types = `
+`
+
+var tmplHeader = template.Must()
+var tmplTypes = template.Must()
+
+var hardcodedTypes = map[]string{
+}
+
+var hardcodedFileType = object {
+}
+
+var idiomaticReplacer = strings.NewReplacer("Url", "URL", "ID", "Html", "HTML", "Sha", "SHA", "Ssh", "SSH")
+
+func nonil(err ...error) error {
+}
+
+func die(v interface{}) {
+}
+
+func init() {
+}
+
+func snakeCase() () {
+}
+
+func camelCase(s string) (t string) {
+}
+
+func scrapPayload(s *goquery.Selection, n int) string {
+  url, ok := s.Find("a").Attr("href")
+  if !ok {
+    die("unable to find URL for scrapping")
+  }
+  return scrapPyaloadURL("https://developer.github.com"+url, n)
+}
+
+func scrapPayloadURL() string {
+}
+
+func externalJSON() bool {
+}
+
+func pingEvent() rawEvent {
+  const raw = `{"zen":"Random string of GitHub zen","hook_id":0,"hook":%s}`
+  var hook = scrapPayloadURL("https://developer.github.com/v3/repos/hooks/", 1)
+  return rawEvent{
+    Name: "PingEvent",
+    PayloadJSON: fmt.Sprintf(raw, hook),
+  }
+}
+
+type node struct {
+  name string
+  nodes map[string]interface{}
+}
+
+var setType = func() func(*member, interface{}, string, *[]node) {
+}()
+
+func scrapGithubDocs() (events []rawEvent) {
+}
+
+func readTestdata() (events []rawEvent) {
+}
 
 func main() {
   flag.Parse()
